@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Jeopicodus.Models;
+using Jeopicodus.ViewModels;
+using System.Threading.Tasks;
 
 namespace Jeopicodus.Controllers
 {
@@ -22,5 +24,16 @@ namespace Jeopicodus.Controllers
             return View();
         }
 
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(FillInTheBlankViewModel newQuestion)
+        {
+            await FillInTheBlankViewModel.PostQuestion(newQuestion);
+            return RedirectToAction("Index");
+        }
     }
 }

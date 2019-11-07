@@ -8,21 +8,19 @@
 {
     @Html.LabelFor(model => model.Category, "Category: ")
     <select id="Category" name="Category" class="form-control">
-        <option value="1">Generak</option>
-        <option value="2">JavaScript</option>
-        <option value="3">C#</option>
-        <option value="4">Testing</option>
-        <option value="5">Git</option>
+        <option value="General">General</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="C#<">C#</option>
+        <option value="Testing">Testing</option>
+        <option value="Git">Git</option>
     </select><br>
 
     @Html.LabelFor(model => model.Difficulty, "Difficulty: ")
     <select id="Difficulty" name="Difficulty" class="form-control">
-        <option value="1">Easy</option>
-        <option value="2">Medium</option>
-        <option value="3">Hard</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select><br>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+     </select><br>
 
     @Html.LabelFor(model => model.Prompt, "Prompt: ")
     @Html.TextBoxFor(model => model.Prompt, new {@class = "form-control"})
@@ -31,4 +29,4 @@
     @Html.TextBoxFor(model => model.Answer, new {@class = "form-control"})
 
     <input type="submit" value="Add Question" class="btn btn-info" />
-
+}
