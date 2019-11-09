@@ -10,7 +10,6 @@
     <div id="scoreboard" class="row">
         @{
             List<Team> TeamList = new List<Team>{};
-                
         }
         @foreach(Team team in Model.Game.Teams)
         {
@@ -108,7 +107,7 @@
 
 <script type="text/javascript">
     const hubConnection = new signalR.HubConnectionBuilder()
-                .withUrl("/gameHub")
+                .withUrl("/playHub")
                 .configureLogging(signalR.LogLevel.Information)
                 .build();
     var playerTeamName = '@Model.TeamName';
@@ -147,6 +146,7 @@
 
     $(document).ready(function(){
         underLineActiveTeam();
+        hubConnection.invoke('JoinPlayHub', playerId);
         var teamNameEls = $(document).find('.team').toArray();
         for(let i = 0; i < teamNameEls.length; i++){
             var el = teamNameEls[i];
