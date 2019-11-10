@@ -20,7 +20,7 @@ namespace Jeopicodus.Models
             _userManager = userManager;
         }
 
-        public void JoinHub(string playerId)
+        public void JoinPlayHub(string playerId)
         {
             Console.WriteLine("Joining Hub");
             if (_userManager.Users.FirstOrDefault(player => player.ConnectionId == Context.ConnectionId) == null)
@@ -96,7 +96,6 @@ namespace Jeopicodus.Models
 
         public void CorrectAnswer(string data)
         {
-
             var splitData = data?.Split(new char[] {
             '#' }, StringSplitOptions.None);
             string teamId = splitData[0];

@@ -28,12 +28,12 @@
                     .configureLogging(signalR.LogLevel.Information)
                     .build();
     var playerId = '@Model.User.Id';
-    hubConnection.start();
+    hubConnection.start().then(() => {
+        hubConnection.invoke('JoinHub', '@Model.User.Id').catch(err => console.error(err.toString()));
+    });
     $(document).ready(function(){
         writeGames(data);
-        hubConnection.invoke('JoinHub', playerId);
         hubConnection.on("ShowGames",gameData =>{
-            console.log(gameData);
             writeGames(gameData);
         });
         $('.team-one .join-team').click(function(){
@@ -58,6 +58,11 @@
             hubConnection.invoke('CreateGame', team1Name + "#" + playerId);
             hubConnection.invoke("GameAdded");
         });
+        $("#startGameBtn").click(function(){
+            const gameIdString = $(this).closest(".card").attr("id");
+            const gameId = gameIdString.substring(gameIdString.indexOf("-")+1);
+            hubConnection.invoke('StartGame', gameId);
+        });
 
         function getTeamData(element) {
             const gameIdString = $(element).closest(".card").attr("id");
@@ -66,6 +71,12 @@
             const teamId = teamIdString.substring(teamIdString.indexOf("-")+1);
             hubConnection.invoke('JoinTeam', gameId + "#" + teamId + "#" + playerId);
         }
+
+        hubConnection.on("goToGame", gameId => {
+            console.log("Made it here!")
+            var url = '@Url.Action("Details", "Game", new { id = "__id__" })';
+            window.location.href = url.replace('__id__', gameId);
+        });
 
     function writeGames(htmlToInsert){
         if(typeof htmlToInsert == 'string')
@@ -136,7 +147,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="/Game/Details/${gameId}"><button class="btn btn-success">Start Game</button></a>
+                        <button id="startGameBtn" class="btn btn-success">Start Game</button>
                     </div>
                     `;
                 }
